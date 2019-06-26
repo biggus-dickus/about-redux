@@ -12,59 +12,288 @@
     </style>
 </head>
 <body class="shower list">
-
     <header class="caption">
-        <h1>Shower Presentation Engine</h1>
-        <p>Yours Truly, Famous Inc.</p>
+        <h1>Бизнес-логика и хранение состояния</h1>
+        <p>React-Redux</p>
     </header>
 
     <section class="slide" id="cover">
-        <h2>Shower Presentation Engine</h2>
-        <p>Brought to you by <a href="http://pepelsbey.net">Vadim Makeev</a></p>
-        <figure>
-            <img class="cover" src="pictures/cover.jpg" alt="Hands on the orange typewriter in a park">
-            <figcaption class="copyright right white">
-                <a href="http://fiftyfootshadows.net/">© John Carey</a>
-            </figcaption>
-        </figure>
+        <h2>Управление состоянием приложений</h2>
+        <div>
+          <img class="cover" src="pictures/redux-logo.png" alt="Redux logo">
+        </div>
         <style>
-            #cover h2 {
-                margin: 30px 0 0;
-                color: white;
-                text-align: center;
-                font-size: 70px;
-            }
+        #cover {
+          padding-top: 40px;
+        }
 
-            #cover p {
-                margin: 10px 0 0;
-                text-align: center;
-                color: white;
-                font-style: italic;
-                font-size: 20px;
-            }
+        #cover h2 {
+            margin: 0;
+            text-align: center;
+            font-size: 70px;
+        }
 
-            #cover p a {
-                color: white;
-            }
+        #cover p {
+            margin: 10px 0 0;
+            text-align: center;
+            color: white;
+            font-style: italic;
+            font-size: 20px;
+        }
+
+        #cover p a {
+            color: white;
+        }
         </style>
     </section>
 
     <section class="slide">
-        <h2>Shower key features</h2>
-        <ol>
-            <li>Built on HTML, CSS and JavaScript</li>
-            <li>Works in all modern browsers</li>
-            <li>Themes are separated from engine</li>
-            <li>Fully keyboard accessible</li>
-            <li>Printable to PDF</li>
-        </ol>
-        <p class="note">Shower ['ʃəuə] noun. A person or thing that shows.</p>
+      <h2 class="shout">Зачем еще одна абстракция?</h2>
     </section>
 
     <section class="slide">
-        <h2>Plain text on your slides</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur <a href="#4">adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <em>quis nostrud</em> exercitation ullamco laboris <strong>nisi ut aliquip</strong> ex ea commodo consequat. Duis aute irure <i>dolor</i> in reprehenderit in voluptate velit esse cillum <b>dolore</b> eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in <code>&lt;culpa&gt;</code> qui officia deserunt mollit anim id est laborum.</p>
+      <h2>Приложения растут&hellip;</h2>
     </section>
+
+    <section class="slide">
+      <figure>
+          <img class="cover" src="pictures/code-screen.png" alt="Too complex">
+          <figcaption class="copyright right">
+              И становятся трудно поддерживаемыми
+          </figcaption>
+      </figure>
+    </section>
+
+    <section class="slide">
+      <h2>React в MV* — это только V</h2>
+      <p>Где хранить M и C (P, VM и т. п.)?</p>
+    </section>
+
+    <section class="slide">
+      <h2>React в MVC</h2>
+      <ul>
+        <li>React иерархичен: одни компоненты вкладываются в другие, доступ снаружи есть только через props компонента верхнего уровня (App)</li>
+        <li>Если нужно передать данные в глубоко вложенный компонент, нужно спускать
+        их через App</li>
+        <li>Props у App нужно изменять каждый раз, когда изменяется состояние хранилища. При этом нужно избежать лишнего повторного
+        рендеринга</li>
+        <li>App становится очень сложным</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">Архитектурный паттерн Flux</h2>
+    </section>
+
+    <section class="slide" id="picture">
+      <figure>
+          <img class="cover" src="pictures/flux.png" alt="Flux">
+          <figcaption class="copyright right">
+              Flux architectural pattern
+          </figcaption>
+      </figure>
+    </section>
+
+    <section class="slide">
+      <h2>Ключевые понятия</h2>
+      <ul>
+        <li>Stores</li>
+        <li>Dispatcher</li>
+        <li>Views</li>
+        <li>Action / Action Creators</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Постулаты Flux</h2>
+
+      <p>Хранилища управляют состояниями, но не напрямую, а через подписку на экшны. Состояния информируют представления о необходимости обновиться.</p>
+      <p>Представления отображают пользовательский интерфейс.</p>
+      <p>Диспетчер отправляет экшны во все зарегистрированные хранилища.</p>
+      <p>Экшны — это простые объекты.</p>
+    </section>
+
+    <section class="slide">
+      <h2>Redux</h2>
+      <ul>
+        <li><strong>Одна из</strong> реализаций паттерна Flux</li>
+        <li>В основе — принцип чистых функций и иммутабельности данных</li>
+        <li>Redux != React (есть адаптации для популярных фреймворков и библиотек)</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>React-Redux</h2>
+      <ul>
+        <li>Хранилище — единый источник правды для всего приложения</li>
+        <li>Хранилище изменяется с помощью редьюсера (-ов)</li>
+        <li>Views синхронизируются с хранилищем через подписку (<code>mapStateToProps</code>)</li>
+        <li>Обратная синхронизация работает через отправку actions (<code>mapDispatchToProps</code>)</li>
+        <li>Хранилище связано с компонентами не напрямую, а через connect</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>React-Redux</h2>
+      <div>
+          <img class="cover" src="pictures/redux-scheme.png" alt="How redux works">
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2>Action</h2>
+
+      <p>Объект с одним обязательным полем <code>type</code>, который содержит в себе информацию о новом состоянии фрагмента хранилища.</p>
+      <pre>
+        <code>
+          const errorAction = {
+            type: 'NETWORK_ERROR',
+            payload: 'Authorization required'
+          }
+        </code>
+      </pre>
+    </section>
+
+    <section class="slide">
+      <h2>Action Creator</h2>
+
+      <p>Паттерн, при котором actions создаются не руками внутри кода компонента, а через внешний метод.</p>
+      <pre>
+        <code>
+          const getNetworkError = (error) => ({
+            type: ActionType.GET_NETWORK_ERROR,
+            payload: error
+          })
+        </code>
+      </pre>
+    </section>
+
+    <section class="slide">
+      <h2>Reducer</h2>
+
+      <code>const reducer = (currentState, action) => newState;</code>
+      <p>Функция с двумя параметрами-объектами: текущим состоянием приложения и действием, которое должно его как-то обновить.</p>
+      <p>Операция схожа с методом свертывания массива: на выходе получаем какое-то значение, но в процессе выполнения храним промежуточный результат. Отсюда и название.</p>
+    </section>
+
+    <section class="slide">
+      <h2>Middleware</h2>
+      <p>
+        Функция-перехватчик, которая позволяет &laquo;вклиниться&raquo; в работу Redux и совершить некое промежуточное действие: отправить запрос к серверу, проиграть звук, записать лог.
+      </p>
+    </section>
+
+    <section class="slide">
+      <h2>Provider</h2>
+      <code>&lt;Provider /&gt;</code>
+      <p>
+        Компонент-обертка, который через методы <code>mapStateToProps</code> и <code>mapDispatchToProps</code>
+        связывает React-компонент с Redux-хранилищем.
+      </p>
+    </section>
+
+    <section class="slide" id="redux-code">
+      <style>
+        #redux-code pre {
+          font-size: 20px;
+        }
+      </style>
+
+      <h2>Redux в семь строк</h2>
+      <pre>
+        <code>
+          function createStore(reducer, initialState) {
+            let state = initialState;
+            return {
+              dispatch: (action) => {state = reducer(state, action)},
+              getState: () => state
+            };
+          }
+        </code>
+      </pre>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">TodoApp на Redux</h2>
+    </section>
+
+    <section class="slide">
+      <h2>Создаем начальное состояние</h2>
+
+      <code>const initialTodos = [];</code>
+    </section>
+
+    <section class="slide" id="reducer-code">
+      <style>
+        #reducer-code pre {
+          font-size: 8px;
+        }
+      </style>
+
+      <h2>Пишем для него редьюсер</h2>
+
+      <pre>
+        <code>
+          const todosReducer = (state, action) => {
+            switch (action.type) {
+              case 'ADD_TODO':
+                return [
+                  ...state,
+                  {
+                    id: action.id,
+                    text: action.text,
+                    completed: false
+                  }
+                ];
+              case 'TOGGLE_TODO':
+                return state.map(todo => {
+                  if (todo.id === action.id) {
+                    return {...todo, completed: !todo.completed};
+                  }
+                  return todo;
+                })
+              default:
+                return state;
+            }
+          }
+        </code>
+      </pre>
+    </section>
+
+    <section class="slide">
+      <h2>Инициализируем хранилище</h2>
+
+      <code style="font-size: 18px;">const store = createStore(todosReducer, initialTodos);</code>
+    </section>
+
+    <section class="slide">
+      <h2>Пользуемся</h2>
+
+      <pre>
+        <code style="font-size: 11px;">
+          store.dispatch({
+            type: 'ADD_TODO',
+            id: 1,
+            text: 'Понять, насколько redux прост'
+          });
+
+          store.getState();
+          // [{ id: 1, text: 'Понять, насколько redux прост', completed: false }]
+
+          store.dispatch({
+            type: 'TOGGLE_TODO',
+            id: 1
+          });
+
+          store.getState();
+          // [{ id: 1, text: 'Понять насколько redux прост', completed: true }]
+        </code>
+      </pre>
+    </section>
+
+
+
+
 
     <section class="slide">
         <h2>Two columns if you like</h2>
@@ -204,7 +433,6 @@
     <div class="progress"></div>
 
     <script src="node_modules/shower-core/shower.min.js"></script>
-    <!-- Copyright © 3000 Yours Truly, Famous Inc. -->
 
 </body>
 </html>
