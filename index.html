@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Управление состоянием приложений c React-Redux</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="shower/themes/ribbon/styles/styles.css">
+    <style>
+        .shower {
+            --slide-ratio: calc(16 / 9);
+        }
+    </style>
+</head>
+<body class="shower list">
+<header class="caption">
+    <h1>Бизнес-логика и хранение состояния</h1>
+    <p>React-Redux</p>
+</header>
+
+<section class="slide" id="cover">
+    <h2>Управление состоянием приложений</h2>
+    <div>
+        <img class="cover" src="pictures/redux-logo.png" alt="Redux logo">
+    </div>
+    <style>
+        #cover {
+            padding-top: 40px;
+        }
+
+        #cover h2 {
+            margin: 0;
+            text-align: center;
+            font-size: 70px;
+        }
+
+        #cover p {
+            margin: 10px 0 0;
+            text-align: center;
+            color: white;
+            font-style: italic;
+            font-size: 20px;
+        }
+
+        #cover p a {
+            color: white;
+        }
+    </style>
+</section>
+
+<section class="slide">
+    <h2 class="shout">Зачем еще одна абстракция?</h2>
+</section>
+
+<section class="slide">
+    <h2>Приложения растут&hellip;</h2>
+</section>
+
+<section class="slide">
+    <figure>
+        <img class="cover" src="pictures/code-screen.png" alt="Too complex">
+        <figcaption class="copyright right">
+            И становятся трудно поддерживаемыми
+        </figcaption>
+    </figure>
+</section>
+
+<section class="slide">
+    <h2>React в MV*</h2>
+    <ul>
+        <li>React иерархичен: одни компоненты вкладываются в другие, доступ снаружи есть только через props компонента
+            верхнего уровня (App)
+        </li>
+        <li>Если нужно передать данные в глубоко вложенный компонент, нужно спускать
+            их через App
+        </li>
+        <li>Props у App нужно изменять каждый раз, когда изменяется состояние хранилища. При этом нужно избежать лишнего
+            повторного
+            рендеринга
+        </li>
+        <li>App становится очень сложным</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>React в MV* — это только V</h2>
+    <p>Где хранить M и C (P, VM и т. п.)?</p>
+</section>
+
+<section class="slide">
+    <h2 class="shout">Архитектурный паттерн Flux</h2>
+</section>
+
+<section class="slide" id="picture">
+    <figure>
+        <img class="cover" src="pictures/flux.png" alt="Flux">
+        <figcaption class="copyright right">
+            Flux architectural pattern
+        </figcaption>
+    </figure>
+</section>
+
+<section class="slide">
+    <h2>Ключевые понятия</h2>
+    <ul>
+        <li>Stores</li>
+        <li>Dispatcher</li>
+        <li>Views</li>
+        <li>Action / Action Creators</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Постулаты Flux</h2>
+
+    <p>Хранилища управляют состояниями, но не напрямую, а через подписку на экшны. Состояния информируют представления о
+        необходимости обновиться.</p>
+    <p>Представления отображают пользовательский интерфейс.</p>
+    <p>Диспетчер отправляет экшны во все зарегистрированные хранилища.</p>
+    <p>Экшны — это простые объекты.</p>
+</section>
+
+<section class="slide">
+    <h2>Redux</h2>
+    <ul>
+        <li><strong>Одна из</strong> реализаций паттерна Flux</li>
+        <li>В основе — принцип чистых функций и иммутабельности данных</li>
+        <li>Redux != React (есть адаптации для популярных фреймворков и библиотек)</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>React-Redux</h2>
+    <ul>
+        <li>Хранилище — единый источник правды для всего приложения</li>
+        <li>Хранилище изменяется с помощью редьюсера (-ов)</li>
+        <li>Views синхронизируются с хранилищем через подписку (<code>mapStateToProps</code>)</li>
+        <li>Обратная синхронизация работает через отправку actions (<code>mapDispatchToProps</code>)</li>
+        <li>Хранилище связано с компонентами не напрямую, а через connect</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>React-Redux</h2>
+    <div>
+        <img class="cover" src="pictures/redux-scheme.png" alt="How redux works">
+    </div>
+</section>
+
+<section class="slide">
+    <h2>Action</h2>
+
+    <p>Объект с одним обязательным полем <code>type</code>, который содержит в себе информацию о новом состоянии
+        фрагмента хранилища.</p>
+    <pre>
+        <code>
+          const errorAction = {
+            type: 'NETWORK_ERROR',
+            payload: 'Authorization required'
+          }
+        </code>
+      </pre>
+</section>
+
+<section class="slide">
+    <h2>Action Creator</h2>
+
+    <p>Паттерн, при котором actions создаются не руками внутри кода компонента, а через внешний метод.</p>
+    <pre>
+        <code>
+          const getNetworkError = (error) => ({
+            type: 'NETWORK_ERROR',
+            payload: error
+          })
+        </code>
+      </pre>
+</section>
+
+<section class="slide">
+    <h2>Reducer</h2>
+
+    <code>const reducer = (currentState, action) => newState;</code>
+    <p>Функция с двумя параметрами-объектами: текущим состоянием приложения и действием, которое должно его как-то
+        обновить.</p>
+    <p>Операция схожа с методом свертывания массива: на выходе получаем какое-то значение, но в процессе выполнения
+        храним промежуточный результат. Отсюда и название.</p>
+</section>
+
+<section class="slide">
+    <h2>Middleware</h2>
+    <p>
+        Функция-перехватчик, которая позволяет &laquo;вклиниться&raquo; в работу Redux и совершить некое промежуточное
+        действие: отправить запрос к серверу, проиграть звук, записать лог.
+    </p>
+</section>
+
+<section class="slide">
+    <h2>Provider</h2>
+    <code>&lt;Provider store={yourStore} /&gt;</code>
+    <p>
+        Компонент-обертка, который через методы <code>mapStateToProps</code> и <code>mapDispatchToProps</code>
+        связывает React-компонент с Redux-хранилищем.
+    </p>
+</section>
+
+<section class="slide" id="redux-code">
+    <style>
+        #redux-code pre {
+            font-size: 20px;
+        }
+    </style>
+
+    <h2>Redux в семь строк</h2>
+    <pre>
+        <code>
+          function createStore(reducer, initialState) {
+            let state = initialState;
+            return {
+              dispatch: (action) => {state = reducer(state, action)},
+              getState: () => state
+            };
+          }
+        </code>
+      </pre>
+</section>
+
+<section class="slide">
+    <h2 class="shout">TodoApp на Redux</h2>
+</section>
+
+<section class="slide">
+    <h2>Создаем начальное состояние</h2>
+
+    <code>const initialTodos = [];</code>
+</section>
+
+<section class="slide" id="reducer-code">
+    <style>
+        #reducer-code pre {
+            font-size: 8px;
+        }
+    </style>
+
+    <h2>Пишем для него редьюсер</h2>
+
+    <pre>
+        <code>
+          const todosReducer = (state, action) => {
+            switch (action.type) {
+              case 'ADD_TODO':
+                return [
+                  ...state,
+                  {
+                    id: action.id,
+                    text: action.text,
+                    completed: false
+                  }
+                ];
+              case 'TOGGLE_TODO':
+                return state.map(todo => {
+                  if (todo.id === action.id) {
+                    return {...todo, completed: !todo.completed};
+                  }
+                  return todo;
+                })
+              default:
+                return state;
+            }
+          }
+        </code>
+      </pre>
+</section>
+
+<section class="slide">
+    <h2>Инициализируем хранилище</h2>
+
+    <code style="font-size: 18px;">const store = createStore(todosReducer, initialTodos);</code>
+</section>
+
+<section class="slide">
+    <h2>Пользуемся</h2>
+
+    <pre>
+        <code style="font-size: 11px;">
+          store.dispatch({
+            type: 'ADD_TODO',
+            id: 1,
+            text: 'Понять, насколько redux прост'
+          });
+
+          store.getState();
+          // [{ id: 1, text: 'Понять, насколько redux прост', completed: false }]
+
+          store.dispatch({
+            type: 'TOGGLE_TODO',
+            id: 1
+          });
+
+          store.getState();
+          // [{ id: 1, text: 'Понять насколько redux прост', completed: true }]
+        </code>
+      </pre>
+</section>
+
+
+<section class="slide">
+    <h2><code>ApplyMiddleware</code></h2>
+    <p>Переопределяет метод <code>dispatch</code>, добавляя перед (или после) обновлением состояния какую-то пользовательскую логику.</p>
+
+    <code style="font-size: 16px;">const createStoreWithMiddleware = applyMiddleware(someMiddleware)(createStore);</code><br>
+    <code style="font-size: 16px;">const store = createStoreWithMiddleware(reducer, initialState);</code>
+</section>
+
+<section class="slide">
+    <h2>Redux-thunk</h2>
+    <pre>
+        <code>
+            const fetchTodos = () => (dispatch) => {
+              // return
+              Api.get('/todos').then((data) => dispatch({
+                type: 'GET_TODOS',
+                payload: data
+              }))
+            };
+        </code>
+    </pre>
+</section>
+
+<section class="slide">
+    <h2>Redux-thunk по-модному</h2>
+    <pre>
+        <code>
+            const fetchTodos = async () => (dispatch) => {
+              const todos = await Api.get('/todos');
+              dispatch({
+                type: 'GET_TODOS',
+                payload: todos
+              })
+            };
+        </code>
+    </pre>
+</section>
+
+<section class="slide">
+    <h2>Принцип Thunk</h2>
+    <code>const thunk = (store) => (dispatch) => action;</code>
+    <p>Хранилище отправляет функцию (необязательно асинхронную), которая реализует пользовательскую логику.</p>
+    <p>После этого шлется обычный action, который содержит результат предыдущей функции и обновляет хранилище.</p>
+</section>
+
+<section class="slide">
+    <h2>О чем стоит помнить</h2>
+    <div class="columns two">
+        <p>
+            Редьюсер только изменяет состояние. Дополнительная логика должна находиться вне редьюсера
+            и вне action.
+        </p>
+        <p>
+            Экшны содержат информацию о фрагментах состояния, по одному за раз.
+        </p>
+    </div>
+</section>
+
+<section class="slide">
+    <h2><span style="color: forestgreen">Хороший</span> action</h2>
+    <ul lang="ru">
+        <li>Отправить запрос на авторизацию</li>
+        <li class="next">Получить пользовательские данные</li>
+        <li class="next">Отправить информацию об ошибке</li>
+        <li class="next">Сообщить, что ресурс требует авторизации</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2><span style="color: #c00">Плохой</span> action</h2>
+    <p>
+        Отправить запрос на авторизацию, и если ответ 403, перенаправить юзера на страницу логина. Если всё ок, перейти в личный кабинет.
+        И, если что-то пошло не так, показать в интерфейсе ошибку.
+    </p>
+</section>
+
+<section class="slide">
+    <h2>Логика компонентов приложения</h2>
+    <div class="columns two">
+        <p>
+            <code>mapStateToProps</code><br>
+            преобразует состояние (state) Redux
+            в props компонента. При каждом изменении
+            хранилища, изменяются и props компонента.
+        </p>
+        <p>
+            <code>mapDispatchToProps</code><br>
+            преобразует состояние или данные компонента в данные, необходимые для редьюсера.
+            Отправляет actions, которые изнутри вызываются опять же через props.
+        </p>
+    </div>
+</section>
+
+<section class="slide">
+    <h2>Обернутый компонент</h2>
+    <pre>
+        <code style="font-size: 18px;">
+            const App = () => &lt;h1&gt;Hello!&lt;/h1&gt;;
+            export default connect(mapsStateToProps, mapDispatchToProps)(App);
+        </code>
+    </pre>
+</section>
+
+<section class="slide">
+    <h2>Для тестов</h2>
+    <pre>
+        <code style="font-size: 18px;">
+            // Тестируем только view, а логику его работы — в юнит-тестах редьюсера
+            export const App = () => &lt;h1&gt;Hello!&lt;/h1&gt;;
+            export default connect(mapsStateToProps, mapDispatchToProps)(App);
+        </code>
+    </pre>
+</section>
+
+<section class="slide">
+    <h2>Альтернативы Redux</h2>
+    <ul>
+        <li><a href="https://reactjs.org/docs/context.html" target="_blank">React Context API</a></li>
+        <li class="next"><a href="https://mobx.js.org/" target="_blank">MobX</a></li>
+        <li class="next"><del>Свой велосипед</del> своя реализация Flux</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2 class="shout shrink">Danke schön!</h2>
+</section>
+
+<section class="slide">
+    <h2>Материалы</h2>
+    <ul>
+        <li><a href="https://redux.js.org/" target="_blank">Redux JS</a></li>
+        <li><a href="https://www.freecodecamp.org/news/an-introduction-to-the-flux-architectural-pattern-674ea74775c9/" target="_blank">An introduction to the Flux architectural pattern</a></li>
+        <li><a href="https://egghead.io/courses/getting-started-with-redux" target="_blank">Видеокурс Дэна Абрамова</a></li>
+        <li><a href="https://habr.com/ru/post/439104" target="_blank">Redux. Простой, как грабли</a></li>
+    </ul>
+</section>
+
+<section class="slide" id="see-more">
+    <h2 class="shout">
+        <a href="https://github.com/biggus-dickus/what-to-watch" target="_blank">See more on GitHub</a>
+    </h2>
+    <style>
+        #see-more h2 {
+            font-size: 100px
+        }
+    </style>
+</section>
+
+<div class="progress"></div>
+
+<script src="shower/shower.min.js"></script>
+
+</body>
+</html>
