@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <title>Shower Presentation Engine</title>
+    <title>Управление состоянием приложений c React-Redux</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="node_modules/@shower/ribbon/styles/styles.css">
@@ -12,19 +12,19 @@
     </style>
 </head>
 <body class="shower list">
-    <header class="caption">
-        <h1>Бизнес-логика и хранение состояния</h1>
-        <p>React-Redux</p>
-    </header>
+<header class="caption">
+    <h1>Бизнес-логика и хранение состояния</h1>
+    <p>React-Redux</p>
+</header>
 
-    <section class="slide" id="cover">
-        <h2>Управление состоянием приложений</h2>
-        <div>
-          <img class="cover" src="pictures/redux-logo.png" alt="Redux logo">
-        </div>
-        <style>
+<section class="slide" id="cover">
+    <h2>Управление состоянием приложений</h2>
+    <div>
+        <img class="cover" src="pictures/redux-logo.png" alt="Redux logo">
+    </div>
+    <style>
         #cover {
-          padding-top: 40px;
+            padding-top: 40px;
         }
 
         #cover h2 {
@@ -44,107 +44,114 @@
         #cover p a {
             color: white;
         }
-        </style>
-    </section>
+    </style>
+</section>
 
-    <section class="slide">
-      <h2 class="shout">Зачем еще одна абстракция?</h2>
-    </section>
+<section class="slide">
+    <h2 class="shout">Зачем еще одна абстракция?</h2>
+</section>
 
-    <section class="slide">
-      <h2>Приложения растут&hellip;</h2>
-    </section>
+<section class="slide">
+    <h2>Приложения растут&hellip;</h2>
+</section>
 
-    <section class="slide">
-      <figure>
-          <img class="cover" src="pictures/code-screen.png" alt="Too complex">
-          <figcaption class="copyright right">
-              И становятся трудно поддерживаемыми
-          </figcaption>
-      </figure>
-    </section>
+<section class="slide">
+    <figure>
+        <img class="cover" src="pictures/code-screen.png" alt="Too complex">
+        <figcaption class="copyright right">
+            И становятся трудно поддерживаемыми
+        </figcaption>
+    </figure>
+</section>
 
-    <section class="slide">
-      <h2>React в MV* — это только V</h2>
-      <p>Где хранить M и C (P, VM и т. п.)?</p>
-    </section>
-
-    <section class="slide">
-      <h2>React в MVC</h2>
-      <ul>
-        <li>React иерархичен: одни компоненты вкладываются в другие, доступ снаружи есть только через props компонента верхнего уровня (App)</li>
+<section class="slide">
+    <h2>React в MV*</h2>
+    <ul>
+        <li>React иерархичен: одни компоненты вкладываются в другие, доступ снаружи есть только через props компонента
+            верхнего уровня (App)
+        </li>
         <li>Если нужно передать данные в глубоко вложенный компонент, нужно спускать
-        их через App</li>
-        <li>Props у App нужно изменять каждый раз, когда изменяется состояние хранилища. При этом нужно избежать лишнего повторного
-        рендеринга</li>
+            их через App
+        </li>
+        <li>Props у App нужно изменять каждый раз, когда изменяется состояние хранилища. При этом нужно избежать лишнего
+            повторного
+            рендеринга
+        </li>
         <li>App становится очень сложным</li>
-      </ul>
-    </section>
+    </ul>
+</section>
 
-    <section class="slide">
-      <h2 class="shout">Архитектурный паттерн Flux</h2>
-    </section>
+<section class="slide">
+    <h2>React в MV* — это только V</h2>
+    <p>Где хранить M и C (P, VM и т. п.)?</p>
+</section>
 
-    <section class="slide" id="picture">
-      <figure>
-          <img class="cover" src="pictures/flux.png" alt="Flux">
-          <figcaption class="copyright right">
-              Flux architectural pattern
-          </figcaption>
-      </figure>
-    </section>
+<section class="slide">
+    <h2 class="shout">Архитектурный паттерн Flux</h2>
+</section>
 
-    <section class="slide">
-      <h2>Ключевые понятия</h2>
-      <ul>
+<section class="slide" id="picture">
+    <figure>
+        <img class="cover" src="pictures/flux.png" alt="Flux">
+        <figcaption class="copyright right">
+            Flux architectural pattern
+        </figcaption>
+    </figure>
+</section>
+
+<section class="slide">
+    <h2>Ключевые понятия</h2>
+    <ul>
         <li>Stores</li>
         <li>Dispatcher</li>
         <li>Views</li>
         <li>Action / Action Creators</li>
-      </ul>
-    </section>
+    </ul>
+</section>
 
-    <section class="slide">
-      <h2>Постулаты Flux</h2>
+<section class="slide">
+    <h2>Постулаты Flux</h2>
 
-      <p>Хранилища управляют состояниями, но не напрямую, а через подписку на экшны. Состояния информируют представления о необходимости обновиться.</p>
-      <p>Представления отображают пользовательский интерфейс.</p>
-      <p>Диспетчер отправляет экшны во все зарегистрированные хранилища.</p>
-      <p>Экшны — это простые объекты.</p>
-    </section>
+    <p>Хранилища управляют состояниями, но не напрямую, а через подписку на экшны. Состояния информируют представления о
+        необходимости обновиться.</p>
+    <p>Представления отображают пользовательский интерфейс.</p>
+    <p>Диспетчер отправляет экшны во все зарегистрированные хранилища.</p>
+    <p>Экшны — это простые объекты.</p>
+</section>
 
-    <section class="slide">
-      <h2>Redux</h2>
-      <ul>
+<section class="slide">
+    <h2>Redux</h2>
+    <ul>
         <li><strong>Одна из</strong> реализаций паттерна Flux</li>
         <li>В основе — принцип чистых функций и иммутабельности данных</li>
         <li>Redux != React (есть адаптации для популярных фреймворков и библиотек)</li>
-      </ul>
-    </section>
+    </ul>
+</section>
 
-    <section class="slide">
-      <h2>React-Redux</h2>
-      <ul>
+<section class="slide">
+    <h2>React-Redux</h2>
+    <ul>
         <li>Хранилище — единый источник правды для всего приложения</li>
         <li>Хранилище изменяется с помощью редьюсера (-ов)</li>
         <li>Views синхронизируются с хранилищем через подписку (<code>mapStateToProps</code>)</li>
         <li>Обратная синхронизация работает через отправку actions (<code>mapDispatchToProps</code>)</li>
         <li>Хранилище связано с компонентами не напрямую, а через connect</li>
-      </ul>
-    </section>
+    </ul>
+</section>
 
-    <section class="slide">
-      <h2>React-Redux</h2>
-      <div>
-          <img class="cover" src="pictures/redux-scheme.png" alt="How redux works">
-      </div>
-    </section>
+<section class="slide">
+    <h2>React-Redux</h2>
+    <div>
+        <img class="cover" src="pictures/redux-scheme.png" alt="How redux works">
+    </div>
+</section>
 
-    <section class="slide">
-      <h2>Action</h2>
+<section class="slide">
+    <h2>Action</h2>
 
-      <p>Объект с одним обязательным полем <code>type</code>, который содержит в себе информацию о новом состоянии фрагмента хранилища.</p>
-      <pre>
+    <p>Объект с одним обязательным полем <code>type</code>, который содержит в себе информацию о новом состоянии
+        фрагмента хранилища.</p>
+    <pre>
         <code>
           const errorAction = {
             type: 'NETWORK_ERROR',
@@ -152,55 +159,58 @@
           }
         </code>
       </pre>
-    </section>
+</section>
 
-    <section class="slide">
-      <h2>Action Creator</h2>
+<section class="slide">
+    <h2>Action Creator</h2>
 
-      <p>Паттерн, при котором actions создаются не руками внутри кода компонента, а через внешний метод.</p>
-      <pre>
+    <p>Паттерн, при котором actions создаются не руками внутри кода компонента, а через внешний метод.</p>
+    <pre>
         <code>
           const getNetworkError = (error) => ({
-            type: ActionType.GET_NETWORK_ERROR,
+            type: 'NETWORK_ERROR',
             payload: error
           })
         </code>
       </pre>
-    </section>
+</section>
 
-    <section class="slide">
-      <h2>Reducer</h2>
+<section class="slide">
+    <h2>Reducer</h2>
 
-      <code>const reducer = (currentState, action) => newState;</code>
-      <p>Функция с двумя параметрами-объектами: текущим состоянием приложения и действием, которое должно его как-то обновить.</p>
-      <p>Операция схожа с методом свертывания массива: на выходе получаем какое-то значение, но в процессе выполнения храним промежуточный результат. Отсюда и название.</p>
-    </section>
+    <code>const reducer = (currentState, action) => newState;</code>
+    <p>Функция с двумя параметрами-объектами: текущим состоянием приложения и действием, которое должно его как-то
+        обновить.</p>
+    <p>Операция схожа с методом свертывания массива: на выходе получаем какое-то значение, но в процессе выполнения
+        храним промежуточный результат. Отсюда и название.</p>
+</section>
 
-    <section class="slide">
-      <h2>Middleware</h2>
-      <p>
-        Функция-перехватчик, которая позволяет &laquo;вклиниться&raquo; в работу Redux и совершить некое промежуточное действие: отправить запрос к серверу, проиграть звук, записать лог.
-      </p>
-    </section>
+<section class="slide">
+    <h2>Middleware</h2>
+    <p>
+        Функция-перехватчик, которая позволяет &laquo;вклиниться&raquo; в работу Redux и совершить некое промежуточное
+        действие: отправить запрос к серверу, проиграть звук, записать лог.
+    </p>
+</section>
 
-    <section class="slide">
-      <h2>Provider</h2>
-      <code>&lt;Provider /&gt;</code>
-      <p>
+<section class="slide">
+    <h2>Provider</h2>
+    <code>&lt;Provider store={yourStore} /&gt;</code>
+    <p>
         Компонент-обертка, который через методы <code>mapStateToProps</code> и <code>mapDispatchToProps</code>
         связывает React-компонент с Redux-хранилищем.
-      </p>
-    </section>
+    </p>
+</section>
 
-    <section class="slide" id="redux-code">
-      <style>
+<section class="slide" id="redux-code">
+    <style>
         #redux-code pre {
-          font-size: 20px;
+            font-size: 20px;
         }
-      </style>
+    </style>
 
-      <h2>Redux в семь строк</h2>
-      <pre>
+    <h2>Redux в семь строк</h2>
+    <pre>
         <code>
           function createStore(reducer, initialState) {
             let state = initialState;
@@ -211,28 +221,28 @@
           }
         </code>
       </pre>
-    </section>
+</section>
 
-    <section class="slide">
-      <h2 class="shout">TodoApp на Redux</h2>
-    </section>
+<section class="slide">
+    <h2 class="shout">TodoApp на Redux</h2>
+</section>
 
-    <section class="slide">
-      <h2>Создаем начальное состояние</h2>
+<section class="slide">
+    <h2>Создаем начальное состояние</h2>
 
-      <code>const initialTodos = [];</code>
-    </section>
+    <code>const initialTodos = [];</code>
+</section>
 
-    <section class="slide" id="reducer-code">
-      <style>
+<section class="slide" id="reducer-code">
+    <style>
         #reducer-code pre {
-          font-size: 8px;
+            font-size: 8px;
         }
-      </style>
+    </style>
 
-      <h2>Пишем для него редьюсер</h2>
+    <h2>Пишем для него редьюсер</h2>
 
-      <pre>
+    <pre>
         <code>
           const todosReducer = (state, action) => {
             switch (action.type) {
@@ -258,18 +268,18 @@
           }
         </code>
       </pre>
-    </section>
+</section>
 
-    <section class="slide">
-      <h2>Инициализируем хранилище</h2>
+<section class="slide">
+    <h2>Инициализируем хранилище</h2>
 
-      <code style="font-size: 18px;">const store = createStore(todosReducer, initialTodos);</code>
-    </section>
+    <code style="font-size: 18px;">const store = createStore(todosReducer, initialTodos);</code>
+</section>
 
-    <section class="slide">
-      <h2>Пользуемся</h2>
+<section class="slide">
+    <h2>Пользуемся</h2>
 
-      <pre>
+    <pre>
         <code style="font-size: 11px;">
           store.dispatch({
             type: 'ADD_TODO',
@@ -289,150 +299,160 @@
           // [{ id: 1, text: 'Понять насколько redux прост', completed: true }]
         </code>
       </pre>
-    </section>
+</section>
 
 
+<section class="slide">
+    <h2><code>ApplyMiddleware</code></h2>
+    <p>Переопределяет метод <code>dispatch</code>, добавляя перед (или после) обновлением состояния какую-то пользовательскую логику.</p>
 
+    <code style="font-size: 16px;">const createStoreWithMiddleware = applyMiddleware(someMiddleware)(createStore);</code><br>
+    <code style="font-size: 16px;">const store = createStoreWithMiddleware(reducer, initialState);</code>
+</section>
 
+<section class="slide">
+    <h2>Redux-thunk</h2>
+    <pre>
+        <code>
+            const fetchTodos = () => (dispatch) => {
+              // return
+              Api.get('/todos').then((data) => dispatch({
+                type: 'GET_TODOS',
+                payload: data
+              }))
+            };
+        </code>
+    </pre>
+</section>
 
-    <section class="slide">
-        <h2>Two columns if you like</h2>
-        <div class="columns two">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
-        </div>
-    </section>
+<section class="slide">
+    <h2>Redux-thunk по-модному</h2>
+    <pre>
+        <code>
+            const fetchTodos = async () => (dispatch) => {
+              const todos = await Api.get('/todos');
+              dispatch({
+                type: 'GET_TODOS',
+                payload: todos
+              })
+            };
+        </code>
+    </pre>
+</section>
 
-    <section class="slide">
-        <h2>All kind of lists</h2>
-        <ol>
-            <li>Simple lists are marked with bullets</li>
-            <li>Ordered lists begin with a number</li>
-            <li>You can even nest lists one inside another
-                <ul>
-                    <li>Or mix their types</li>
-                    <li>But do not go too far</li>
-                    <li>Otherwise audience will be bored</li>
-                </ul>
-            </li>
-            <li>Look, seven rows exactly!</li>
-        </ol>
-    </section>
+<section class="slide">
+    <h2>Принцип Thunk</h2>
+    <code>const thunk = (store) => (dispatch) => action;</code>
+    <p>Хранилище отправляет функцию (необязательно асинхронную), которая реализует пользовательскую логику.</p>
+    <p>После этого шлется обычный action, который содержит результат предыдущей функции и обновляет хранилище.</p>
+</section>
 
-    <section class="slide">
-        <h2>Serious citations</h2>
-        <figure>
-            <blockquote>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
-            </blockquote>
-            <figcaption>Marcus Tullius Cicero</figcaption>
-        </figure>
-    </section>
+<section class="slide">
+    <h2>О чем стоит помнить</h2>
+    <div class="columns two">
+        <p>
+            Редьюсер только изменяет состояние. Дополнительная логика должна находиться вне редьюсера
+            и вне action.
+        </p>
+        <p>
+            Экшны содержат информацию о фрагментах состояния, по одному за раз.
+        </p>
+    </div>
+</section>
 
-    <section class="slide">
-        <h2>Code samples</h2>
-        <pre>
-            <code>&lt;!DOCTYPE html&gt;</code>
-            <code class="mark">&lt;html lang="en"&gt;</code>
-            <code><mark>&lt;head&gt;</mark> <span class="comment">&lt;!--Comment--&gt;</span></code>
-            <code>    &lt;title&gt;Shower&lt;/title&gt;</code>
-            <code>    &lt;meta charset="<mark class="important">UTF-8</mark>"&gt;</code>
-            <code>    &lt;link rel="stylesheet" href="screen.css"&gt;</code>
-            <code><mark>&lt;/head&gt;</mark></code>
-        </pre>
-    </section>
+<section class="slide">
+    <h2><span style="color: forestgreen">Хороший</span> action</h2>
+    <ul lang="ru">
+        <li>Отправить запрос на авторизацию</li>
+        <li class="next">Получить пользовательские данные</li>
+        <li class="next">Отправить информацию об ошибке</li>
+        <li class="next">Сообщить, что ресурс требует авторизации</li>
+    </ul>
+</section>
 
-    <section class="slide">
-        <h2>Even tables</h2>
-        <table>
-        <tr>
-            <th scope="col">Locavore</th>
-            <th>Umami</th>
-            <th>Helvetica</th>
-            <th>Vegan</th>
-        </tr>
-        <tr>
-            <th scope="row">Fingerstache</th>
-            <td>Kale</td>
-            <td>Chips</td>
-            <td>Keytar</td>
-        </tr>
-        <tr>
-            <th scope="row">Sriracha</th>
-            <td>Gluten-free</td>
-            <td>Ennui</td>
-            <td>Keffiyeh</td>
-        </tr>
-        <tr>
-            <th scope="row">Thundercats</th>
-            <td>Jean</td>
-            <td>Shorts</td>
-            <td>Biodiesel</td>
-        </tr>
-        <tr>
-            <th scope="row">Terry</th>
-            <td>Richardson</td>
-            <td>Swag</td>
-            <td>Blog</td>
-        </tr>
-        </table>
-        <p>It’s good to have information organized.</p>
-    </section>
+<section class="slide">
+    <h2><span style="color: #c00">Плохой</span> action</h2>
+    <p>
+        Отправить запрос на авторизацию, и если ответ 403, перенаправить юзера на страницу логина. Если всё ок, перейти в личный кабинет.
+        И, если что-то пошло не так, показать в интерфейсе ошибку.
+    </p>
+</section>
 
-    <section class="slide" id="picture">
-        <h2>Pictures</h2>
-        <figure>
-            <img class="cover" src="pictures/picture.jpg" alt="Orange typewriter on a wooden table close-up">
-            <figcaption class="copyright right white">
-                <a href="http://fiftyfootshadows.net/">© John Carey</a>
-            </figcaption>
-        </figure>
-        <style>
-            #picture h2 {
-                color: white;
-            }
-        </style>
-    </section>
+<section class="slide">
+    <h2>Логика компонентов приложения</h2>
+    <div class="columns two">
+        <p>
+            <code>mapStateToProps</code><br>
+            преобразует состояние (state) Redux
+            в props компонента. При каждом изменении
+            хранилища, изменяются и props компонента.
+        </p>
+        <p>
+            <code>mapDispatchToProps</code><br>
+            преобразует состояние или данные компонента в данные, необходимые для редьюсера.
+            Отправляет actions, которые изнутри вызываются опять же через props.
+        </p>
+    </div>
+</section>
 
-    <section class="slide">
-        <h2 class="shout shrink">You can even shout this way</h2>
-    </section>
+<section class="slide">
+    <h2>Обернутый компонент</h2>
+    <pre>
+        <code style="font-size: 18px;">
+            const App = () => &lt;h1&gt;Hello!&lt;/h1&gt;;
+            export default connect(mapsStateToProps, mapDispatchToProps)(App);
+        </code>
+    </pre>
+</section>
 
-    <section class="slide">
-        <h2>Inner navigation</h2>
-        <ol>
-            <li>Lets you reveal list items one by one</li>
-            <li class="next">To keep some key points</li>
-            <li class="next">In secret from audience</li>
-            <li class="next">But it will work only once</li>
-            <li class="next">Nobody wants to see the same joke twice</li>
-        </ol>
-    </section>
+<section class="slide">
+    <h2>Для тестов</h2>
+    <pre>
+        <code style="font-size: 18px;">
+            // Тестируем только view, а логику его работы — в юнит-тестах редьюсера
+            export const App = () => &lt;h1&gt;Hello!&lt;/h1&gt;;
+            export default connect(mapsStateToProps, mapDispatchToProps)(App);
+        </code>
+    </pre>
+</section>
 
-    <section class="slide" id="see-more">
-        <h2 class="shout">
-            <img src="pictures/logo.svg" alt="Shower logo">
-            <a href="https://github.com/shower/shower">See more on GitHub</a>
-        </h2>
-        <style>
-            #see-more h2 {
-                font-size: 100px
-            }
+<section class="slide">
+    <h2>Альтернативы Redux</h2>
+    <ul>
+        <li><a href="https://reactjs.org/docs/context.html" target="_blank">React Context API</a></li>
+        <li class="next"><a href="https://mobx.js.org/" target="_blank">MobX</a></li>
+        <li class="next"><del>Свой велосипед</del> своя реализация Flux</li>
+    </ul>
+</section>
 
-            #see-more img {
-                width: 0.72em;
-                height: 0.72em;
-            }
-        </style>
-    </section>
+<section class="slide">
+    <h2 class="shout shrink">Danke schön!</h2>
+</section>
 
-    <footer class="badge">
-        <a href="https://github.com/shower/shower">Fork me on GitHub</a>
-    </footer>
+<section class="slide">
+    <h2>Материалы</h2>
+    <ul>
+        <li><a href="https://redux.js.org/" target="_blank">Redux JS</a></li>
+        <li><a href="https://www.freecodecamp.org/news/an-introduction-to-the-flux-architectural-pattern-674ea74775c9/" target="_blank">An introduction to the Flux architectural pattern</a></li>
+        <li><a href="https://egghead.io/courses/getting-started-with-redux" target="_blank">Видеокурс Дэна Абрамова</a></li>
+        <li><a href="https://habr.com/ru/post/439104" target="_blank">Redux. Простой, как грабли</a></li>
+    </ul>
+</section>
 
-    <div class="progress"></div>
+<section class="slide" id="see-more">
+    <h2 class="shout">
+        <a href="https://github.com/biggus-dickus/what-to-watch" target="_blank">See more on GitHub</a>
+    </h2>
+    <style>
+        #see-more h2 {
+            font-size: 100px
+        }
+    </style>
+</section>
 
-    <script src="node_modules/shower-core/shower.min.js"></script>
+<div class="progress"></div>
+
+<script src="node_modules/shower-core/shower.min.js"></script>
 
 </body>
 </html>
